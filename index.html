@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Nodejs - PostgreSQL - Socket.io</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+       var socket = io();
+       socket.on('connect', function () {
+         socket.emit('hi');
+         
+         socket.on('pgsql', function(incoming) {
+           var data = JSON.parse(incoming);
+           console.log(data);
+           document.getElementById('update').innerHTML += '<br>' + data.properties.label + ': ' + data.geometry.coordinates[1] + ' ' +  data.geometry.coordinates[0];
+         });
+       });
+    </script>
+  </head>
+  <body class="container">
+    <h1>Nodejs - PostgreSQL - Socket.io</h1>
+    <h3>Data comes directly from PostgreSQL to Socket.io server</h3>
+    <div id="update"></div>
+  </body>
+</html>
